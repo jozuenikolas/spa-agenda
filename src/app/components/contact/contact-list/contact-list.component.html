@@ -1,39 +1,92 @@
-<div class="container p-5">
+<div class="row no-gutters justify-content-center p-5 mx-5">
+  <section class="container container-template">
 
-  <!--#region filters - button-->
-  <div class="row">
-    <div class="col-md-4">
-      <input id="filterInput"
-             class="form-control"
-             placeholder="Buscar contacto">
+    <!--#region title-->
+    <h1 class="display-6 fw-bold mb-4">
+      Mis contactos
+    </h1>
+    <!--#endregion-->
+
+    <!--#region filters - button-->
+    <div class="row" style="grid-gap: 1.5rem 0">
+      <div class="col-md-3 mb-3">
+        <input id="filterInput"
+               class="form-control"
+               placeholder="Buscar contacto"
+               [formControl]="nameFilter">
+      </div>
+      <div class="col-md-3 mb-3">
+        <select id="filterSelect"
+                class="form-select"
+                [formControl]="countryFilter">
+          <option value="">Selecciona una opción</option>
+          <option value="Ecuador">Ecuador</option>
+          <option value="Colombia">Colombia</option>
+          <option value="Peru">Peru</option>
+        </select>
+      </div>
+      <div class="col-md-6 mb-3">
+        <button id="addButton"
+                type="button"
+                class="btn btn-primary float-end"
+                routerLink="/contactos/crear">
+          <i class="fa-solid fa-user-plus mx-2"></i>
+          Agregar contacto
+        </button>
+      </div>
     </div>
+    <!--#endregion -->
 
-    <div class="col-md-4">
-      <select id="filterSelect"
-              class="form-select">
-        <option selected>Selecciona una opción</option>
-        <option value="1">Uno</option>
-        <option value="2">Dos</option>
-        <option value="3">Tres</option>
-      </select>
+    <!--#region table-->
+    <div *ngIf="(contactList$ | async) as dataTable; else elseError"
+         class="table-responsive mt-3">
+      <table class="table table-light table-hover table-bordered">
+        <thead>
+        <tr class="table-dark">
+          <th *ngFor="let column of columns">
+            {{column}}
+          </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngIf="dataTable.length === 0; else totalElements">
+          <td colspan="5">
+            No hay contactos registrados
+          </td>
+        </tr>
+        <ng-template #totalElements>
+          <tr *ngFor="let contact of dataTable | contact:nameFilter.value:countryFilter.value" class="border-bottom">
+            <td>{{contact.name + " " + contact.lastName}}</td>
+            <td>{{contact.phoneNumber}}</td>
+            <td>{{contact.country}}</td>
+            <td>
+              <div class="d-flex flex-nowrap justify-content-around">
+                <div [routerLink]="'/contactos/editar/'+contact.id">
+                  <i class="fa-solid fa-edit cursor-pointer" style="font-size: 20px;"></i>
+                </div>
+                <i class="fa-solid fa-trash cursor-pointer" style="color: #ff0000; font-size: 20px;"></i>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+        </tbody>
+      </table>
     </div>
+    <!--#endregion -->
 
-    <div class="col-md-4">
-      <button id="addButton"
-              type="button"
-              class="btn btn-primary float-end">
-        <i class="fa-solid fa-user-plus mx-2"></i>
-        Agregar contacto
-      </button>
-    </div>
-  </div>
-  <!--#endregion -->
+    <!--#region error-->
+    <ng-template #elseError>
+      <div *ngIf="showSpinner; else errorMessage" class="text-center">
+        <div class="spinner-border text-warning m-5"
+             style="width: 7rem; height: 7rem;">
+        </div>
 
-
-  <!--#region table-->
-  <section>
+      </div>
+      <ng-template #errorMessage>
+        <h6 class="my-4"> Es posible que el enlace que seleccionaste esté roto o que se haya eliminado la página.</h6>
+      </ng-template>
+    </ng-template>
+    <!--#endregion-->
 
   </section>
-  <!--#endregion -->
-
 </div>

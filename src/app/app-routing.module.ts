@@ -3,6 +3,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {ContactListComponent} from "./components/contact/contact-list/contact-list.component";
 import {ContactFormComponent} from "./components/contact/contact-form/contact-form.component";
 import {ContactResolver} from "./resolvers/contact.resolver";
+import {PageErrorComponent} from "./components/page-error/page-error.component";
 
 const routes: Routes = [
   {
@@ -20,11 +21,25 @@ const routes: Routes = [
         path: 'editar/:id',
         component: ContactFormComponent,
         resolve: {
-          contacto: ContactResolver
+          contact: ContactResolver
         }
       }
     ]
-  }
+  },
+  {
+    path: '',
+    redirectTo: '/contactos',
+    pathMatch: 'full',
+  },
+  {
+    path: 'pg-error',
+    component: PageErrorComponent,
+  },
+  {
+    path: '**',
+    redirectTo: 'pg-error',
+    pathMatch: 'full',
+  },
 ];
 
 @NgModule({

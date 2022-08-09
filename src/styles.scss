@@ -1,1 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
+
+.container-template {
+  //width: 800px;
+  padding: 30px 40px !important;
+  background-color: #ffffff;
+  border-radius: 4px;
+  box-shadow: rgba(0, 0, 0, 0.05) 0 6px 24px 0, rgba(0, 0, 0, 0.08) 0 0 0 1px;
+}
+
+.cursor-pointer	{
+  cursor: pointer;
+}

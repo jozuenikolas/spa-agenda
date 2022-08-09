@@ -1,1 +1,126 @@
-<p>pokemon-form works!</p>
+<div class="row no-gutters p-5 mx-5">
+  <section class="section-form container container-template text-truncate">
+
+    <!--#region alert-message-->
+    <div *ngIf="showAlert"
+         class="alert alert-danger text-center mx-4">
+      Asegurate de llenar los campos obligatorios
+    </div>
+    <!--#endregion-->
+
+    <ng-container *ngIf="contactFormGroup">
+      <form id="contactFormGroup"
+            class="w-100 px-4"
+            [formGroup]="contactFormGroup">
+
+        <!--#region title-->
+        <h1 class="text-center display-6 fw-bold mb-4">
+          {{isEdit ? 'Editar' : 'Agregar'}} contacto
+        </h1>
+        <!--#endregion-->
+
+        <!--#region name - lastName-->
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="inputName" class="form-label fw-bold">Nombre *</label>
+            <input id="inputName"
+                   class="form-control"
+                   formControlName="name"
+                   [ngClass]="name?.invalid && (name?.dirty || name?.touched)?'is-invalid':''">
+            <div *ngIf="name?.invalid && (name?.dirty || name?.touched)"
+                 class="errors">
+              <div *ngIf="name?.errors?.['required']">
+                El nombre es requerido.
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label for="inputLastName" class="form-label fw-bold">Apellido *</label>
+            <input id="inputLastName"
+                   class="form-control"
+                   formControlName="lastName"
+                   [ngClass]="lastName?.invalid && (lastName?.dirty || lastName?.touched)?'is-invalid':''">
+            <div *ngIf="lastName?.invalid && (lastName?.dirty || lastName?.touched)"
+                 class="errors">
+              <div *ngIf="lastName?.errors?.['required']">
+                El apellido es requerido.
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--#endregion-->
+
+        <!--#region phoneNumber - country-->
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="inputPhoneNumber" class="form-label fw-bold">Teléfono *</label>
+            <input id="inputPhoneNumber"
+                   class="form-control"
+                   formControlName="phoneNumber"
+                   [ngClass]="phoneNumber?.invalid && (phoneNumber?.dirty || phoneNumber?.touched)?'is-invalid':''">
+            <div *ngIf="phoneNumber?.invalid && (phoneNumber?.dirty || phoneNumber?.touched)"
+                 class="errors">
+              <div *ngIf="phoneNumber?.errors?.['required']">
+                El teléfono es requerido.
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label for="selectCountry" class="form-label fw-bold">País *</label>
+            <select id="selectCountry"
+                    class="form-select"
+                    formControlName="country"
+                    [ngClass]="country?.invalid && (country?.dirty || country?.touched)?'is-invalid':''">
+              <option value="">Selecciona una opción</option>
+              <option value="Ecuador">Ecuador</option>
+              <option value="Colombia">Colombia</option>
+              <option value="Peru">Peru</option>
+            </select>
+            <div *ngIf="country?.invalid && (country?.dirty || country?.touched)"
+                 class="errors">
+              <div *ngIf="country?.errors?.['required']">
+                El país es requerido.
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--#endregion-->
+
+        <!--#region address-->
+        <div class="row mb-5">
+          <div class="col-md">
+            <label for="inputAddress" class="form-label fw-bold">Dirección *</label>
+            <input id="inputAddress"
+                   class="form-control"
+                   formControlName="address"
+                   [ngClass]="address?.invalid && (address?.dirty || address?.touched)?'is-invalid':''">
+            <div *ngIf="address?.invalid && (address?.dirty || address?.touched)"
+                 class="errors">
+              <div *ngIf="address?.errors?.['required']">
+                La dirección es requerida.
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--#endregion-->
+
+        <!--#region buttons-->
+        <div class="w-100 d-flex flex-wrap justify-content-end mb-3" style="margin-top: 20px; gap: 10px">
+          <button class="btn btn-secondary btn-lg" routerLink="/contactos"
+                  style="width: 150px">
+            Cancelar
+          </button>
+          <button class="btn btn-primary btn-lg" (click)="onSubmit()"
+                  style="width: 150px">
+            Aceptar
+          </button>
+        </div>
+        <!--#endregion-->
+
+      </form>
+    </ng-container>
+
+  </section>
+</div>
